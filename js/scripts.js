@@ -236,6 +236,109 @@ $(document).ready(function () {
     });
 
 });
+/********************** Mesa de regalos **********************/
+var urlGoogleSheet = 'https://script.google.com/macros/s/AKfycbyKRLCc25OE14DJItk0ISfUO502Vka-z3M5ov9mMeQ7R6OVERDNIpW3Vg2eh89u7yj8/exec';
+function toggleStatus(index, giftName) {
+    $.ajax({
+        url: urlGoogleSheet, // Tu URL de Apps Script
+        method: 'POST',
+        data: {
+            'action': 'toggleStatus',
+            'giftName': giftName
+        },
+        success: function(response) {
+            // Actualizar la interfaz de usuario según la respuesta
+            var statusCell = document.getElementById('status-' + index);
+            var currentStatus = statusCell.textContent;
+            statusCell.textContent = currentStatus === 'Apartado' ? 'Disponible' : 'Apartado';
+        },
+        error: function(err) {
+            console.error(err);
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    function fetchGifts() {
+        $.ajax({
+            url: urlGoogleSheet,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                displayGifts(data);
+            },
+            error: function(err) {
+                console.error(err);
+            }
+        });
+    }
+
+    function displayGifts(gifts) {
+        var giftList = document.getElementById('gift-list');
+        giftList.innerHTML = ''; // Limpiar el contenido existente
+    
+        // Crear la tabla y sus encabezados
+        var table = document.createElement('table');
+        table.innerHTML = `
+            <tr>
+                <th>Nombre del Regalo</th>
+                <th>Imagen</th>
+                <th>Estado</th>
+            </tr>
+        `;
+    
+        // Agregar cada regalo como una fila en la tabla
+        gifts.forEach(function(gift, index) {
+            var row = table.insertRow();
+            row.innerHTML = `
+                <td>${gift.name}</td>
+                <td><img src="${gift.url}" alt="${gift.name}" style="width:100px;height:100px;"></td>
+                <td id="status-${index}">${gift.booked ? 'Apartado' : 'Disponible'}</td>
+                <td><button onclick="toggleStatus(${index}, '${gift.name}')">${gift.booked ? 'Marcar como Disponible' : 'Marcar como Apartado'}</button></td>
+            `;
+        });
+    
+        // Añadir la tabla al contenedor
+        giftList.appendChild(table);
+    }
+
+    
+
+    document.getElementById('new-gift-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+    
+        var name = document.getElementById('gift-name').value;
+        var imageUrl = document.getElementById('gift-image-url').value;
+        var booked = document.getElementById('gift-booked').checked ? 'si' : 'no';
+    
+        // Crear un objeto con los datos del formulario
+        var formData = new FormData();
+        formData.append('name', name);
+        formData.append('url', imageUrl);
+        formData.append('booked', booked);
+    
+        // Enviar los datos al servidor utilizando fetch
+        fetch(urlGoogleSheet, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Aquí puedes manejar la respuesta del servidor, como actualizar la UI
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+    
+
+    fetchGifts(); // Cargar los regalos al iniciar
+});
+
+
+
 
 /********************** Extras **********************/
 
