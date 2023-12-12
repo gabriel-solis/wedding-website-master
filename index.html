@@ -18,6 +18,7 @@
     <meta property="og:description" content="Nos gustaría invitarte a nuestro gran día.">
     <meta property="og:image" content="img/portada.png">
     <meta property="og:type" content="website">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -52,6 +53,7 @@
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/jquery.fancybox.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
     <link rel="stylesheet" href="css/flexslider.css">
     <link rel="stylesheet" href="css/styles.min.css">
     <link rel="stylesheet" href="css/queries.css">
@@ -95,11 +97,14 @@
                             <li><a href="#events">Eventos</a></li>
                             <li><a href="#instagram">Instagram</a></li>
                             <li><a href="#eng-pics">Compromiso</a></li>
-                            <li class="hidden-sm hidden-xs"><a href="#video-bg">Vislumbre de la ciudad</a></li>
+                            <!--
+                                <li class="hidden-sm hidden-xs"><a href="#video-bg">Vislumbre de la ciudad</a></li>
+                            -->
+                            
                         </ul>
                         <ul class="member-actions">
-                            <li><a href="#map" class="login">Lugar del evento</a></li>
-                            <li><a href="#rsvp" class="btn-white btn-small">RSVP</a></li>
+                            <li><a href="#mesa" class="login">Mesa de regalos</a></li>
+                            <li><a href="#rsvp" class="btn-white btn-small">Confirmación</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -123,7 +128,7 @@
         <div class="row">
             <div class="col-sm-4 hidden-xs"></div>
             <div class="col-sm-4 hidden-xs text-center"><a href="#rsvp"
-                                                           class="btn btn-accent btn-large rsvp-btn">RSVP</a></div>
+                                                           class="btn btn-accent btn-large rsvp-btn">Confirmación</a></div>
             <div class="col-sm-4 hidden-xs"></div>
         </div>
     </div>
@@ -163,6 +168,19 @@
     </div>
 </section>
 
+<section id="music">
+    <div class="container">
+        <div class="row">
+            <div class="text-center">
+                <audio id="audioPlayer" src="music/MiPersonaFavorita.mp3"  > <!--loop controls autoplay-->
+                    <p>Si te encuentras leyendo esto, es porque tu navegador no soporta el elemento de audio.</p>   
+                </audio>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <section id="intro">
     <div class="container">
         <div class="row">
@@ -188,6 +206,16 @@
         <div class="row">
             <div class="col-sm-4 col-sm-push-2 col-xs-6 hidden-md hidden-lg"><img src="img/jessi.png" class="wp8"></div>
             <div class="col-sm-4 col-sm-push-2 col-xs-6 hidden-md hidden-lg"><img src="img/gabo.png" class="wp9"></div>
+        </div>
+    </div>
+</section>
+
+<section id="blessing">
+    <div class="containter">
+        <div class="row">
+            <div class="text-center">
+
+            </div>
         </div>
     </div>
 </section>
@@ -307,7 +335,7 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                <a class="fancybox" rel="group" href="img/eng_pics/familia-lg.jpg">
+                <a  data-fancybox="gallery" href="img/eng_pics/familia-lg.jpg">
                     <div class="img-wrap">
                         <div class="overlay">
                             <i class="fa fa-search"></i>
@@ -317,7 +345,7 @@
                 </a>
             </div>
             <div class="col-md-2">
-                <a class="fancybox" rel="group" href="img/eng_pics/juntos-lg.jpg">
+                <a data-fancybox="gallery" href="img/eng_pics/juntos-lg.jpg">
                     <div class="img-wrap">
                         <div class="overlay">
                             <i class="fa fa-search"></i>
@@ -327,7 +355,7 @@
                 </a>
             </div>
             <div class="col-md-2">
-                <a class="fancybox" rel="group" href="img/eng_pics/pedida-lg.png">
+                <a data-fancybox="gallery" href="img/eng_pics/pedida-lg.png">
                     <div class="img-wrap">
                         <div class="overlay">
                             <i class="fa fa-search"></i>
@@ -337,7 +365,7 @@
                 </a>
             </div>
             <div class="col-md-2">
-                <a class="fancybox" rel="group" href="img/eng_pics/manos-lg.jpg">
+                <a data-fancybox="gallery" href="img/eng_pics/manos-lg.jpg">
                     <div class="img-wrap">
                         <div class="overlay">
                             <i class="fa fa-search"></i>
@@ -347,7 +375,7 @@
                 </a>
             </div>
             <div class="col-md-2">
-                <a class="fancybox" rel="group" href="img/eng_pics/sonrisa-lg.jpeg">
+                <a data-fancybox="gallery" href="img/eng_pics/sonrisa-lg.jpeg">
                     <div class="img-wrap">
                         <div class="overlay">
                             <i class="fa fa-search"></i>
@@ -357,7 +385,7 @@
                 </a>
             </div>
             <div class="col-md-2">
-                <a class="fancybox" rel="group" href="img/eng_pics/vera-lg.png">
+                <a data-fancybox="gallery" rel="group" href="img/eng_pics/vera-lg.png">
                     <div class="img-wrap">
                         <div class="overlay">
                             <i class="fa fa-search"></i>
@@ -520,6 +548,9 @@
         </div>
     </div>
 </footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="js/jquery.count-time.js"></script>
 <script>
     function handleTickInit(tick) {
@@ -569,7 +600,15 @@
 <script src="js/flip.js"></script>
 <script src="js/vendor/jquery-1.11.2.min.js" onerror="loadJsFromCDN('jquery.js')"></script>
 <script src="node_modules/waypoints/lib/jquery.waypoints.min.js" onerror="loadJsFromCDN('waypoints.js')"></script>
-<script src="js/jquery.fancybox.pack.js"></script>
+<script src="js/jquery.fancybox.pack.js"></script> 
+<!-- Scripts para fancybox-->
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script>
+    Fancybox.bind('[data-fancybox="gallery"]', {
+      //
+    });    
+</script>
+<!-- Terminan scripts para fancybox-->
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/jquery.flexslider-min.js"></script>
 <script src="js/jquery.mb.YTPlayer.min.js"></script>
@@ -593,5 +632,7 @@
     ga('create', 'UA-46465113-4', 'auto');
     ga('send', 'pageview');
 </script>
+
+
 </body>
 </html>

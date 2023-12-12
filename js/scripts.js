@@ -54,12 +54,20 @@ $(document).ready(function () {
     });
 
     /***************** Initiate Fancybox ******************/
-
     $('.single_image').fancybox({
         padding: 4
     });
 
     $('.fancybox').fancybox({
+        helpers: {
+            // Configuraciones para soportar gestos táctiles
+            Thumbs : {
+                type:"modern",
+            },
+            overlay : {
+                locked : false // Habilita el desplazamiento de la página en dispositivos táctiles
+            }
+        },
         padding: 4,
         width: 1000,
         height: 800
@@ -336,8 +344,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     fetchGifts(); // Cargar los regalos al iniciar
 });
-
-
 
 
 /********************** Extras **********************/
