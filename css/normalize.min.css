@@ -223,4 +223,12 @@ th {
 	padding: 0
 }
 
+p {
+	text-align: justify;
+}
+
+.imagen-responsiva {
+	max-width: 100%;
+	height: auto;
+  }
 
