@@ -1,0 +1,83 @@
+
+
+.sect-gifts {
+    
+    margin-bottom: 10px;
+}
+
+.navigation{
+    
+    background-color: rgba(55, 36, 40, .80);
+}
+.table-presents{
+    margin-top: 100px;
+}
+.wide-table {
+    
+    width: 75%;
+    margin: 0 auto; /*Centra la tabla horizontalmente*/
+    
+}
+
+.wide-table th, .wide-table td {
+    text-align: center;
+    /* Otros estilos para tus celdas y encabezados, si es necesario */
+}
+
+
+.disponible {
+    background-color: #E9F7E6;
+  }
+  
+  .apartado {
+    background-color: #FBE0DE;
+  }
+  
+
+/*----------------------*/
+
+
+/* Estilos para pantallas más grandes */
+.wide-table {
+    width: 100%;
+    /* otros estilos de tabla */
+}
+
+.wide-table th, .wide-table td {
+    padding: 10px;
+    /* otros estilos de celda */
+}
+
+/* Estilos para pantallas pequeñas */
+@media screen and (max-width: 600px) {
+    .wide-table, .wide-table thead, .wide-table tbody, .wide-table th, .wide-table td, .wide-table tr {
+        display: inline-block;
+    }
+
+    .wide-table thead {
+        display: none; /* Ocultar el encabezado en pantallas pequeñas */
+    }
+
+    .wide-table tr {
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ddd; /* Agregar un borde para separar las filas */
+    }
+
+    .wide-table td {
+        text-align: left;
+        padding-left: 0; /* Ajustar el padding si es necesario */
+        padding-top: 10px; /* Espacio antes de cada celda */
+    }
+}
+
+/* Estilos para botones y texto */
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    /* otros estilos de botón */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}

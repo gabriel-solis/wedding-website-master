@@ -1,3 +1,4 @@
+<!doctype html>
 <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
@@ -40,7 +41,7 @@
                 document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>');
             }
         }
-    </script>
+    </script>  
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/jquery.fancybox.css">
@@ -50,20 +51,88 @@
     <link rel="stylesheet" href="node_modules/animate.css/animate.min.css" onerror="loadCssFromCDN('animate.css')">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" onerror="loadCssFromCDN('font-awesome.css')">
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <link rel="stylesheet" href="css/gifts.css">
+    <link rel="stylesheet" href="css/modalCode.css">
+
 </head>
-<body id="top">
-    <h1>Mesa de Regalos</h1>
-    <div id="gift-list">
-        <!-- Los regalos se mostrarán aquí -->
+
+
+<body id="presents">
+    <section class="sect-gifts">
+        <section class="navigation">
+            <header>
+                <div class="header-content">
+                    <div class="logo"><a href="#"><img src="img/logo.png" alt="Logo"></a></div>
+                    <div class="header-nav">
+                        <nav>
+                            <ul class="primary-nav">
+                                <li><a href="index.html#intro">¿Cómo nos conocimos?</a></li>
+                                <li><a href="index.html#events">Eventos</a></li>
+                                <li><a href="index.html#instagram">Instagram</a></li>
+                                <li><a href="index.html#eng-pics">Compromiso</a></li>
+                                <!--
+                                    <li class="hidden-sm hidden-xs"><a href="#video-bg">Vislumbre de la ciudad</a></li>
+                                -->
+                                
+                            </ul>
+                            <ul class="member-actions">
+                                <li><a href="mesa-regalos.html" class="login">Mesa de regalos</a></li>
+                                <li><a href="index.html#rsvp" class="btn-white btn-small">Confirmación</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="navicon">
+                        <a class="nav-toggle" href="#"><span></span></a>
+                    </div>
+                </div>
+            </header>
+        </section>
+    </section> 
+
+
+   
+   <section id="section-presents" >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center table-presents">
+                    <h1>Mesa de Regalos</h1>
+                    <div id="gift-list">
+                         <!-- Los regalos se mostrarán aquí  -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+
+    <!-- Diálogo Modal para Código -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Por favor, introduce tu código para apartar el regalo:</p>
+            <input type="text" id="codeInput">
+            <button class="btn btn-accent btn-small" id="submitCode">Enviar</button>
+        </div>
     </div>
 
-    <h2>Añadir Nuevo Regalo</h2>
-    <form id="new-gift-form">
-        <input type="text" id="gift-name" placeholder="Nombre del regalo" required>
-        <input type="text" id="gift-image-url" placeholder="URL de la imagen" required>
-        <input type="checkbox" id="gift-booked"> Apartado
-        <button type="submit">Añadir Regalo</button>
-    </form>
+        <!-- Modal de Error -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center content">
+                    <span class="to-top-wrapper"><a href="#top" class="to-top"><i class="fa fa-angle-up"></i></a></span>
+                    <p style="text-align: center;">Creado por Gabo con mucho <span class="fa fa-heart pulse2"></span> para Jessi</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/jquery.count-time.js"></script>
     <script src="js/vendor/jquery-1.11.2.min.js" onerror="loadJsFromCDN('jquery.js')"></script>

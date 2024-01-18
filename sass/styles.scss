@@ -857,6 +857,8 @@ RSVP form
 Footer
 ========================================================================== */
 footer {
+
+
   .content {
     border-top: 1px solid $keyline-color;
     padding-bottom: 20px;
@@ -888,7 +890,12 @@ footer {
     font-size: 18px;
     margin: 0 2px;
   }
+
+
 }
+
+
+
 
 /* ==========================================================================
 Bootstrap override
@@ -898,4 +905,8 @@ body.modal-open {
 }
 .modal-body {
   padding:25px;
+}
+
+#loveMessage {
+  text-align: center;
 }

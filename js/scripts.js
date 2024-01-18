@@ -245,29 +245,94 @@ $(document).ready(function () {
 
 });
 /********************** Mesa de regalos **********************/
-var urlGoogleSheet = 'https://script.google.com/macros/s/AKfycbyKRLCc25OE14DJItk0ISfUO502Vka-z3M5ov9mMeQ7R6OVERDNIpW3Vg2eh89u7yj8/exec';
+var urlGoogleSheet = 'https://script.google.com/macros/s/AKfycbwgl7UCWI1i6rZd0QPioHbspxZwbVJ4A9rpx5LjgjVjsP37wOC-PIC_vzMefQcsYeAn/exec';
+
 function toggleStatus(index, giftName) {
-    $.ajax({
-        url: urlGoogleSheet, // Tu URL de Apps Script
-        method: 'POST',
-        data: {
-            'action': 'toggleStatus',
-            'giftName': giftName
-        },
-        success: function(response) {
-            // Actualizar la interfaz de usuario según la respuesta
-            var statusCell = document.getElementById('status-' + index);
-            var currentStatus = statusCell.textContent;
-            statusCell.textContent = currentStatus === 'Apartado' ? 'Disponible' : 'Apartado';
-        },
-        error: function(err) {
-            console.error(err);
+    // Muestra el modal
+    var modal = document.getElementById("codeModal");
+    var span = document.getElementsByClassName("close")[0];
+    var submitCodeBtn = document.getElementById("submitCode");
+    var codeInput = document.getElementById("codeInput");
+
+    // Limpia el input y muestra el modal
+    codeInput.value = ''
+    modal.style.display = "block";
+
+    // Cuando el usuario hace clic en (x), cierra el modal
+    span.onclick = function() {
+        modal.style.display = "none";
+        codeInput.value = ''; // Limpia el input al cerrar
+    };
+
+    // Cuando el usuario hace clic fuera del modal, ciérralo
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            codeInput.value = ''; // Limpia el input al cerrar
         }
-    });
+    };
+
+    // Manejar el envío del código
+    submitCodeBtn.onclick = function() {
+        var code = codeInput.value;
+        modal.style.display = "none";
+
+        // Continuar con la lógica de AJAX
+        if (code) {
+            $.ajax({
+                url: urlGoogleSheet,
+                method: 'POST',
+                data: {
+                    'action': 'toggleStatus',
+                    'giftName': giftName,
+                    'code': code
+                },
+                success: function(response) {
+                    if (response.result === 'success') {
+                        var statusSpan = document.querySelector('#status-' + index + ' span');
+                        var newStatus = statusSpan.textContent === 'Apartado' ? 'Disponible' : 'Apartado';
+
+                        statusSpan.textContent = newStatus;
+                        statusSpan.className = newStatus === 'Disponible' ? 'disponible' : 'apartado';
+
+                        var button = statusSpan.parentNode.nextElementSibling.firstChild;
+                        button.textContent = newStatus === 'Disponible' ? 'Apartar' : 'Liberar';
+                    } else {
+                        // Muestra el modal de error
+                        document.getElementById('errorMessage').textContent = response.message;
+                        var errorModal = document.getElementById('errorModal');
+                        var errorSpan = errorModal.getElementsByClassName('close')[0];
+                        
+                        errorModal.style.display = "block";
+
+                        // Cierra el modal en (x) o al hacer clic fuera
+                        errorSpan.onclick = function() {
+                            errorModal.style.display = "none";
+                        };
+                        window.onclick = function(event) {
+                            if (event.target == errorModal) {
+                                errorModal.style.display = "none";
+                            }
+                        };
+                    }
+                },
+                error: function(err) {
+                    // Manejo de error de la solicitud AJAX
+                    console.error(err);
+                    // Muestra un mensaje de error genérico
+                    document.getElementById('errorMessage').textContent = 'Ocurrió un error al procesar la solicitud.';
+                    var errorModal = document.getElementById('errorModal');
+                    errorModal.style.display = "block";
+                }
+            });
+        }
+    };
 }
 
+// Asegúrate de que el resto del código JavaScript esté presente aquí.
+
+
 document.addEventListener('DOMContentLoaded', function() {
-    
     function fetchGifts() {
         $.ajax({
             url: urlGoogleSheet,
@@ -284,10 +349,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayGifts(gifts) {
         var giftList = document.getElementById('gift-list');
-        giftList.innerHTML = ''; // Limpiar el contenido existente
+        giftList.innerHTML = '';
     
-        // Crear la tabla y sus encabezados
         var table = document.createElement('table');
+        table.classList.add('wide-table');
         table.innerHTML = `
             <tr>
                 <th>Nombre del Regalo</th>
@@ -296,55 +361,23 @@ document.addEventListener('DOMContentLoaded', function() {
             </tr>
         `;
     
-        // Agregar cada regalo como una fila en la tabla
         gifts.forEach(function(gift, index) {
+            var statusClass = gift.booked ? 'apartado' : 'disponible';
             var row = table.insertRow();
             row.innerHTML = `
-                <td>${gift.name}</td>
-                <td><img src="${gift.url}" alt="${gift.name}" style="width:100px;height:100px;"></td>
-                <td id="status-${index}">${gift.booked ? 'Apartado' : 'Disponible'}</td>
-                <td><button onclick="toggleStatus(${index}, '${gift.name}')">${gift.booked ? 'Marcar como Disponible' : 'Marcar como Apartado'}</button></td>
+                <td data-label="Nombre del Regalo">${gift.name}</td>
+                <td data-label="Imagen"><img src="${gift.url}" alt="${gift.name}" style="width:100px;height:100px;"></td>
+                <td data-label="Estado" id="status-${index}"><span class="${statusClass}">${gift.booked ? 'Apartado' : 'Disponible'}</span></td>
+                <td><button class="btn btn-accent btn-small" onclick="toggleStatus(${index}, '${gift.name}')">${gift.booked ? 'Liberar' : 'Apartar'}</button></td>
             `;
         });
+        
     
-        // Añadir la tabla al contenedor
         giftList.appendChild(table);
     }
 
-    
-
-    document.getElementById('new-gift-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-    
-        var name = document.getElementById('gift-name').value;
-        var imageUrl = document.getElementById('gift-image-url').value;
-        var booked = document.getElementById('gift-booked').checked ? 'si' : 'no';
-    
-        // Crear un objeto con los datos del formulario
-        var formData = new FormData();
-        formData.append('name', name);
-        formData.append('url', imageUrl);
-        formData.append('booked', booked);
-    
-        // Enviar los datos al servidor utilizando fetch
-        fetch(urlGoogleSheet, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            // Aquí puedes manejar la respuesta del servidor, como actualizar la UI
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
-    
-
-    fetchGifts(); // Cargar los regalos al iniciar
+    fetchGifts();
 });
-
 
 /********************** Extras **********************/
 
