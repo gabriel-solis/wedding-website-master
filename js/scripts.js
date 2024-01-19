@@ -214,6 +214,9 @@ $(document).ready(function () {
 
     $('#add-to-cal').html(myCalendar);
 
+    /********************** Modal inicial **********************/
+
+
 
     /********************** RSVP **********************/
     $('#rsvp-form').on('submit', function (e) {
