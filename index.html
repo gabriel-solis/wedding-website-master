@@ -61,7 +61,8 @@
     <link rel="stylesheet" href="css/queries.css">
     <link rel="stylesheet" href="node_modules/animate.css/animate.min.css" onerror="loadCssFromCDN('animate.css')">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" onerror="loadCssFromCDN('font-awesome.css')">
-    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <link rel="stylesheet" href="css/my.styles.css">
+    
     
 </head>
 <body id="top">
@@ -130,8 +131,9 @@
         </div>
         <div class="row">
             <div class="col-sm-4 hidden-xs"></div>
-            <div class="col-sm-4 hidden-xs text-center"><a href="#rsvp"
-                                                           class="btn btn-accent btn-large rsvp-btn">Confirmación</a></div>
+            <div class="col-sm-4 hidden-xs text-center">
+                <a href="#rsvp" class="btn btn-accent btn-large rsvp-btn">Confirmación</a>
+            </div>
             <div class="col-sm-4 hidden-xs"></div>
         </div>
     </div>
@@ -227,15 +229,15 @@
 <section class="events section-padding" id="events">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 text-center">
                 <h3 class="header">Eventos</h3>
                 <h4 class="header">Mayo 25</h4>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-sm-12 col-xs-12 leftcol">
+            <div class="col-md-6 col-sm-12 col-xs-12 leftcol text-center">
                 <div class="wp3">
-                    <p><strong>Ceremonia Religiosa</strong></p>
+                    <p class="text-center"><strong>Ceremonia Religiosa</strong></p>
                     <h5>Parroquia San Juan Bautista Coyoacán <span class="time">3:30PM - 5PM</span></h5>
                     <img class="imagen-responsiva" src="img/SanJuanBautista.jpg" alt="Iglesia de San Juan Bautista en Coyoacan">
                     <p>Con gran alegría en nuestros corazones y el amor que nos une, nos complace invitarlos a
@@ -254,9 +256,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-12 col-xs-12 rightcol">
+            <div class="col-md-6 col-sm-12 col-xs-12 rightcol text-center">
                 <div class="wp4">
-                    <p><strong>Celebración</strong></p>
+                    <p class="text-center"><strong>Celebración</strong></p>
 
                     <h5>Salon De Fiestas Florencia <span class="time">6:30PM-1AM</span></h5>
                     <img class="imagen-responsiva" src="img/SalonFlorencia.png" alt="Salon Florencia">
@@ -319,7 +321,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h3>Una imagen dice más que mil palabras!</h3>
+                <h3>¡Una imagen dice más que mil palabras!</h3>
                 <p>Ayudanos a capturar cada momento, etiqueta tus fotos con el hashtag
                     <a href="https://www.instagram.com/explore/tags/jessiandgabo/" target="_blank">#JessiandGabo</a>
                 </p>
@@ -327,7 +329,7 @@
         </div>
         <div class="row section-border wp7">
             <div class="col-md-4 col-md-offset-4">
-                <img src="img/insta-phone.png">
+                <a href="https://www.instagram.com/explore/tags/jessiandgabo/"><img src="img/insta-phone.png"></a>
             </div>
         </div>
     </div>
@@ -474,6 +476,39 @@
 </section>
 -->
 
+<section id="gift-table" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>Mesa de regalos</h3>
+                <p>
+                    Sabemos que casarse no es cosa fácil, así que si quieres ayudar a los novios con algún regalo para el que será su nuevo hogar
+                    ten por seguro que te lo van a agradecer.
+                </p>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-md-3 col-lg-3"></div>
+            <div class="col-md-6 col-lg-6 div-img-mesa-regalos"> <!-- Ajustado para ocupar el ancho completo y centrar el contenido -->
+                
+                <img class="img-responsive float-end d-block" 
+                    src="img/gifts_table_md.png" 
+                    alt="Mesa de regalos"> <!-- 'img-fluid' para Bootstrap 4 -->
+            </div>
+            <div class="col-md-3 col-lg-3"></div>
+        </div>
+        <div class="row section-border wp7">
+            <div class="col-4"></div>
+            <div class="col-4 text-center" style="margin-bottom: 1em;">
+                <a href="mesa-regalos.html" class="btn btn-accent btn-large rsvp-btn">Mesa de Regalos</a>
+            </div>
+            <div class="col-4"></div>
+            
+        </div>
+    </div>
+</section>
+
+
 <section class="rsvp text-center" id="rsvp">
     <div id="rsvp-modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -545,6 +580,8 @@
     </div>
 </section>
 
+
+
 <footer>
     <div class="container">
         <div class="row">
@@ -610,6 +647,7 @@
         };
     }
 </script>
+<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 <script src="js/flip.js"></script>
 <script src="js/vendor/jquery-1.11.2.min.js" onerror="loadJsFromCDN('jquery.js')"></script>
 <script src="node_modules/waypoints/lib/jquery.waypoints.min.js" onerror="loadJsFromCDN('waypoints.js')"></script>
