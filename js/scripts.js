@@ -249,33 +249,39 @@ var urlGoogleSheet = 'https://script.google.com/macros/s/AKfycbwgl7UCWI1i6rZd0QP
 
 function toggleStatus(index, giftName) {
     // Muestra el modal
-    var modal = document.getElementById("codeModal");
+    var codeModal = document.getElementById("codeModal");
     var span = document.getElementsByClassName("close")[0];
     var submitCodeBtn = document.getElementById("submitCode");
     var codeInput = document.getElementById("codeInput");
 
     // Limpia el input y muestra el modal
     codeInput.value = ''
-    modal.style.display = "block";
+    codeModal.style.display = "block";
 
     // Cuando el usuario hace clic en (x), cierra el modal
     span.onclick = function() {
-        modal.style.display = "none";
+        codeModal.style.display = "none";
         codeInput.value = ''; // Limpia el input al cerrar
     };
 
     // Cuando el usuario hace clic fuera del modal, ciérralo
     window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == codeModal) {
+            codeModal.style.display = "none";
             codeInput.value = ''; // Limpia el input al cerrar
         }
     };
 
+     
+
     // Manejar el envío del código
     submitCodeBtn.onclick = function() {
+    
         var code = codeInput.value;
-        modal.style.display = "none";
+        codeModal.style.display = "none";
+
+        // Muestra el mensaje de espera
+        showWaitMessage('Espere mientras procesamos la solicitud', true);
 
         // Continuar con la lógica de AJAX
         if (code) {
@@ -289,6 +295,7 @@ function toggleStatus(index, giftName) {
                 },
                 success: function(response) {
                     if (response.result === 'success') {
+
                         var statusSpan = document.querySelector('#status-' + index + ' span');
                         var newStatus = statusSpan.textContent === 'Apartado' ? 'Disponible' : 'Apartado';
 
@@ -297,7 +304,11 @@ function toggleStatus(index, giftName) {
 
                         var button = statusSpan.parentNode.nextElementSibling.firstChild;
                         button.textContent = newStatus === 'Disponible' ? 'Apartar' : 'Liberar';
+                        
+                        // Cambiar mensaje a éxito y ocultarlo después de 1 segundo
+                        showWaitMessage('Se apartó el regalo con éxito', true);
                     } else {
+
                         // Muestra el modal de error
                         document.getElementById('errorMessage').textContent = response.message;
                         var errorModal = document.getElementById('errorModal');
@@ -329,7 +340,21 @@ function toggleStatus(index, giftName) {
     };
 }
 
-// Asegúrate de que el resto del código JavaScript esté presente aquí.
+// Función para mostrar mensaje de espera o éxito
+function showWaitMessage(message, hideAfter = false) {
+    var waitModal = document.getElementById('waitModal');
+    var waitMessage = document.getElementById('waitMessage');
+    
+    waitMessage.textContent = message;
+    waitModal.style.display = 'block';
+
+    // Oculta el mensaje después de 1 segundo si hideAfter es verdadero
+    if (hideAfter) {
+        setTimeout(function() {
+            waitModal.style.display = 'none';
+        }, 1500);
+    }
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
