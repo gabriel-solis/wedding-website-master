@@ -105,27 +105,46 @@
     </section> 
 
     <!-- Diálogo Modal para Código -->
-    <div id="codeModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Por favor, introduce tu código para apartar el regalo:</p>
-            <input type="text" id="codeInput">
-            <button class="btn btn-accent btn-small" id="submitCode">Enviar</button>
+
+    <div id="codeModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="content">
+            <div class="modal-content" style="background-color: rgba(55, 36, 40, .80);">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display: block;">
+                        <span>&times;</span>
+                    </button>
+                    <p></p>
+                    <p style="color: white;">Por favor, introduce tu código para apartar el regalo:</p>
+                    <input type="text" id="codeInput" style="color: black;">
+                    <button class="btn btn-accent btn-small" id="submitCode">Enviar</button>
+                </div>
+    
+            </div>
         </div>
+
     </div>
 
         <!-- Modal de Error -->
     <div id="errorModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p id="errorMessage"></p>
+        <div class="modal-content"  style="background-color: rgba(55, 36, 40, .80);" >
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display: block;">
+                    <span>&times;</span>
+                </button>
+                <p></p>
+                <p id="errorMessage" style="color: white;"></p>
+            </div>
+
         </div>
     </div>
 
-    <!-- Modal de Espera -->
-    <div id="waitModal" class="modal">
-        <div class="modal-content">
-            <p id="waitMessage"></p>
+    <!-- Modal de Message -->
+    <div id="waitModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-content" role="document" style="background-color: rgba(55, 36, 40, .80);" >
+            <div class="modal-body">
+                <p id="waitMessage" style="color: white;"></p>
+            </div>
+           
         </div>
     </div>
 

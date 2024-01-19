@@ -195,7 +195,7 @@ $(document).ready(function () {
             title: "Boda de Jessi y Gabo",
 
             // Event start date
-            start: new Date('May 25, 2024 16:00'),
+            start: new Date('May 25, 2024 15:30'),
 
             // Event duration (IN MINUTES)
             // duration: 120,
@@ -308,20 +308,24 @@ function toggleStatus(index, giftName) {
 
                         var button = statusSpan.parentNode.nextElementSibling.firstChild;
                         button.textContent = newStatus === 'Disponible' ? 'Apartar' : 'Liberar';
+                        if(newStatus == 'Liberar'){
+                            // Cambiar mensaje a éxito y ocultarlo después de 2 segundo
+                            showWaitMessage('Se apartó el regalo con éxito', true);
+                        }else{
+                            showWaitMessage('Se libero el regalo para que alguien más lo aparte.', true);
+                        }
                         
-                        // Cambiar mensaje a éxito y ocultarlo después de 1 segundo
-                        showWaitMessage('Se apartó el regalo con éxito', true);
                     } else {
 
                         // Muestra el modal de error
                         document.getElementById('errorMessage').textContent = response.message;
                         var errorModal = document.getElementById('errorModal');
-                        var errorSpan = errorModal.getElementsByClassName('close')[0];
+                        var span = errorModal.getElementsByClassName('close')[0];
                         
                         errorModal.style.display = "block";
 
                         // Cierra el modal en (x) o al hacer clic fuera
-                        errorSpan.onclick = function() {
+                        span.onclick = function() {
                             errorModal.style.display = "none";
                         };
                         window.onclick = function(event) {
@@ -338,6 +342,19 @@ function toggleStatus(index, giftName) {
                     document.getElementById('errorMessage').textContent = 'Ocurrió un error al procesar la solicitud.';
                     var errorModal = document.getElementById('errorModal');
                     errorModal.style.display = "block";
+
+                    // Cuando el usuario hace clic en (x), cierra el modal
+                    var span = errorModal.getElementsByClassName('close')[0];
+                    span.onclick = function() {
+                        errorModal.style.display = "none";
+                    };
+
+                    // Cuando el usuario hace clic fuera del modal, ciérralo
+                    window.onclick = function(event) {
+                        if (event.target == errorModal) {
+                            errorModal.style.display = "none";
+                        }
+                    };
                 }
             });
         }
@@ -356,12 +373,14 @@ function showWaitMessage(message, hideAfter = false) {
     if (hideAfter) {
         setTimeout(function() {
             waitModal.style.display = 'none';
-        }, 1500);
+        }, 2000);
     }
 }
 
 
+
 document.addEventListener('DOMContentLoaded', function() {
+
     function fetchGifts() {
         showWaitMessage('Cargando mesa de regalo',true);
         $.ajax({
