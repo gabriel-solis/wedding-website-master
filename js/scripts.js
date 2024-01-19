@@ -248,6 +248,7 @@ $(document).ready(function () {
 var urlGoogleSheet = 'https://script.google.com/macros/s/AKfycbwgl7UCWI1i6rZd0QPioHbspxZwbVJ4A9rpx5LjgjVjsP37wOC-PIC_vzMefQcsYeAn/exec';
 
 function toggleStatus(index, giftName) {
+    
     // Muestra el modal
     var codeModal = document.getElementById("codeModal");
     var span = document.getElementsByClassName("close")[0];
@@ -359,6 +360,7 @@ function showWaitMessage(message, hideAfter = false) {
 
 document.addEventListener('DOMContentLoaded', function() {
     function fetchGifts() {
+        showWaitMessage('Cargando mesa de regalo',true);
         $.ajax({
             url: urlGoogleSheet,
             method: 'GET',
