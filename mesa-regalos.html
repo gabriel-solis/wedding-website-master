@@ -53,6 +53,7 @@
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <link rel="stylesheet" href="css/gifts.css">
     <link rel="stylesheet" href="css/modal.mesa.regalos.css">
+    <link rel="stylesheet" href="css/my.styles.css">
 
 </head>
 
@@ -95,7 +96,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center table-presents">
-                    <h1>Mesa de Regalos</h1>
+                    <div class="row">
+                        <div class="col-md-2 col-lg-2"></div>
+                        <div class="col-md-8 col-lg-8">
+                            <h1>Mesa de Regalos</h1>
+                            <p class="text-center">
+                                A los novios no les gusta que te obliguen a comprar regalos en un lugar en especifico,
+                                por eso aparta el regalo que les quieras dar con tu código de invitado y compralo 
+                                donde quieras. <br>
+                                Si prefieres puedes enviarlo a la siguiente dirección:     
+                            </p>
+                            <button id="btn-direccion" class="btn btn-accent btn-large rsvp-btn">Ver dirección</button>
+                        </div>
+                        <div class="col-md-2 col-lg-2"></div>
+
+                    </div>
                     <div id="gift-list">
                          <!-- Los regalos se mostrarán aquí  -->
                     </div>
@@ -104,8 +119,9 @@
         </div>
     </section> 
 
-    <!-- Diálogo Modal para Código -->
+ 
 
+    <!-- Diálogo Modal para Código -->
     <div id="codeModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="content">
             <div class="modal-content" >
@@ -121,7 +137,6 @@
     
             </div>
         </div>
-
     </div>
 
         <!-- Modal de Error -->
