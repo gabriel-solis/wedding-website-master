@@ -214,8 +214,20 @@ $(document).ready(function () {
 
     $('#add-to-cal').html(myCalendar);
 
-    /********************** Modal inicial **********************/
+    /********************** Close Modal **********************/
+    // Cerrar modal cuando se hace clic en el botón de cierre
+    $('.modal').on('click', '.close', function() {
+        $(this).closest('.modal').hide();
+    });
 
+    // Cerrar modal al hacer clic fuera del contenido del modal
+    $(window).click(function(event) {
+        if ($(event.target).hasClass('modal')) {
+            $(event.target).hide();
+        }
+    });
+
+    
 
 
     /********************** RSVP **********************/
@@ -247,6 +259,19 @@ $(document).ready(function () {
     });
 
 });
+
+/********************** Mesa de Regalos Modal Direccion **********************/
+    // Controlador para mostrar el modal 'dirModal'
+    $('#btn-direccion').click(function() {
+        $('#dirModal').show();
+    });
+
+    // Controlador para redireccionar al hacer clic en 'verMapaDir'
+    $('#verMapaDir').click(function() {
+        // Reemplaza 'tuURLDeGoogleMaps' con tu URL real
+        window.location.href = 'https://maps.app.goo.gl/NYFyCGs8a1WCnDn76';
+    });
+
 /********************** Mesa de regalos **********************/
 var urlGoogleSheet = 'https://script.google.com/macros/s/AKfycbwgl7UCWI1i6rZd0QPioHbspxZwbVJ4A9rpx5LjgjVjsP37wOC-PIC_vzMefQcsYeAn/exec';
 
