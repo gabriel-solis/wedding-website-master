@@ -1,0 +1,60 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Jessi & Gabo</title>
+    <meta name="description" content="Inicio de sesión para la boda de Jessi & Gabo.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.min.css">
+    <link rel="stylesheet" href="css/my.styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        body {
+            background: url('img/portada.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 1rem;
+        }
+        .login-form input {
+            margin-bottom: 1rem;
+        }
+        p {
+            color: black
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Invitación J&G</h2>
+        <p>Para ver la invitación ingresa tu código de invitado</p>
+        <form class="login-form">
+            <input type="text" id="inviteCode" placeholder="Ingresa tu código de invitado" required>
+            <button id="loginBtn" type="submit" class="btn btn-accent">Ingresar</button>
+        </form>
+        <div id="loginError" style="color: red;"></div>
+    </div>
+
+
+    <script src="js/scripts.js"></script>
+
+</body>
+</html>

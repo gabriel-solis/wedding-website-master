@@ -227,10 +227,15 @@ $(document).ready(function () {
         }
     });
 
-    
 
 
-    /********************** RSVP **********************/
+
+// ----------------- RSVP mio -----------------------------/
+
+
+
+/*
+    // ----------------- RSVP -----------------------------/
     $('#rsvp-form').on('submit', function (e) {
         e.preventDefault();
         var data = $(this).serialize();
@@ -257,8 +262,95 @@ $(document).ready(function () {
                 });
         }
     });
-
+*/
 });
+/*
+// ----------------- inviteDetailsModal -----------------------------/
+$(document).ready(function() {
+    // Comprobar si hay un código de invitado en la URL
+    var inviteCode = new URLSearchParams(window.location.search).get('inviteCode');
+    if (inviteCode) {
+        // Obtener detalles del invitado
+        getInviteeDetails(inviteCode);
+    }
+
+    // Función para obtener detalles del invitado desde el App Script
+    function getInviteeDetails(code) {
+        $.ajax({
+            url: 'https://script.google.com/macros/s/AKfycbwd-iomKSOEwB4TZDWsQxwWUKvSmzHSw24N0LrMRVa3NyLJjtJYD8q917Y_YAjKOCvdKA/exec', // Reemplaza con tu URL de App Script
+            method: 'GET',
+            dataType: 'json',
+            data: {
+                action: 'getInviteeDetails',
+                code: code
+            },
+            success: function(response) {
+                if (response && response.length > 0) {
+                    showInviteDetailsModal(response);
+                }
+            },
+            error: function() {
+                console.error('Error al obtener los detalles del invitado.');
+            }
+        });
+    }
+
+    // Función para mostrar los detalles del invitado en un modal
+    function showInviteDetailsModal(invitees) {
+        var adultTickets = 0;
+        var childTickets = 0;
+        var inviteeNames = invitees.map(function(invitee) {
+            adultTickets += invitee.boletosAdulto;
+            childTickets += invitee.boletosInfantil;
+            return invitee.nombre;
+        }).join(', ');
+
+        var modalContent = '<p>Invitados: ' + inviteeNames + '</p>';
+        modalContent += '<p>Boletos de Adulto: ' + adultTickets + '</p>';
+        if (childTickets > 0) {
+            modalContent += '<p>Boletos Infantiles: ' + childTickets + '</p>';
+        }
+
+        $('#inviteDetailsContent').html(modalContent);
+        $('#inviteDetailsModal').modal('show'); // Asegúrate de que estás utilizando Bootstrap para el modal
+    }
+});
+
+*/
+
+    
+    /********************** Login**********************/
+    
+    // Función para el formulario de inicio de sesión
+    $('.login-form').on('submit', function(e) {
+        e.preventDefault();
+        var inviteCode = $('#inviteCode').val();
+
+        // Llamada AJAX a Google Apps Script
+        $.ajax({
+            url: 'https://script.google.com/macros/s/AKfycbwd-iomKSOEwB4TZDWsQxwWUKvSmzHSw24N0LrMRVa3NyLJjtJYD8q917Y_YAjKOCvdKA/exec',
+            method: 'GET',
+            dataType: 'json',
+            data: {
+                action: 'verifyInviteCode',
+                code: inviteCode
+            },
+            success: function(response) {
+                if (response.valid) {
+                    window.location.href = 'index.html?code=' + inviteCode;
+                    $('#inviteCode').val(''); // Limpia el input
+                } else {
+                    $('#loginError').text('Código de invitado incorrecto.');
+                    $('#inviteCode').val(''); // Limpia el input
+                }
+            },
+            error: function() {
+                $('#loginError').text('Error al procesar la solicitud.');
+                $('#inviteCode').val(''); // Limpia el input
+            }
+        });
+    });
+
 
 /********************** Mesa de Regalos Modal Direccion **********************/
     // Controlador para mostrar el modal 'dirModal'
@@ -273,7 +365,7 @@ $(document).ready(function () {
     });
 
 /********************** Mesa de regalos **********************/
-var urlGoogleSheet = 'https://script.google.com/macros/s/AKfycbwgl7UCWI1i6rZd0QPioHbspxZwbVJ4A9rpx5LjgjVjsP37wOC-PIC_vzMefQcsYeAn/exec';
+var urlGoogleSheetMesaRegalos = 'https://script.google.com/macros/s/AKfycbwgl7UCWI1i6rZd0QPioHbspxZwbVJ4A9rpx5LjgjVjsP37wOC-PIC_vzMefQcsYeAn/exec';
 
 function toggleStatus(index, giftName) {
     
@@ -315,7 +407,7 @@ function toggleStatus(index, giftName) {
         // Continuar con la lógica de AJAX
         if (code) {
             $.ajax({
-                url: urlGoogleSheet,
+                url: urlGoogleSheetMesaRegalos,
                 method: 'POST',
                 data: {
                     'action': 'toggleStatus',
@@ -324,20 +416,21 @@ function toggleStatus(index, giftName) {
                 },
                 success: function(response) {
                     if (response.result === 'success') {
-
                         var statusSpan = document.querySelector('#status-' + index + ' span');
-                        var newStatus = statusSpan.textContent === 'Apartado' ? 'Disponible' : 'Apartado';
+                        var currentStatus = statusSpan.textContent;
+                        var newStatus = currentStatus === 'Apartado' ? 'Disponible' : 'Apartado';
 
                         statusSpan.textContent = newStatus;
                         statusSpan.className = newStatus === 'Disponible' ? 'disponible' : 'apartado';
 
                         var button = statusSpan.parentNode.nextElementSibling.firstChild;
                         button.textContent = newStatus === 'Disponible' ? 'Apartar' : 'Liberar';
-                        if(newStatus == 'Liberar'){
-                            // Cambiar mensaje a éxito y ocultarlo después de 2 segundo
+
+                        // Mostrar mensaje basado en el estado anterior
+                        if(currentStatus === 'Apartado') {
+                            showWaitMessage('Se liberó el regalo para que alguien más lo aparte.', true);
+                        } else {
                             showWaitMessage('Se apartó el regalo con éxito', true);
-                        }else{
-                            showWaitMessage('Se libero el regalo para que alguien más lo aparte.', true);
                         }
                         
                     } else {
@@ -409,7 +502,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchGifts() {
         showWaitMessage('Cargando mesa de regalo',true);
         $.ajax({
-            url: urlGoogleSheet,
+            url: urlGoogleSheetMesaRegalos,
             method: 'GET',
             dataType: 'json',
             success: function(data) {
