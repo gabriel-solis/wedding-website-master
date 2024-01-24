@@ -230,54 +230,21 @@ $(document).ready(function () {
 
 
 
-// ----------------- RSVP mio -----------------------------/
-
-
-
-/*
-    // ----------------- RSVP -----------------------------/
-    $('#rsvp-form').on('submit', function (e) {
-        e.preventDefault();
-        var data = $(this).serialize();
-
-        $('#alert-wrapper').html(alert_markup('info', '<strong>¡Espera un momento!</strong> Estamos guardando tus datos.'));
-
-        if (MD5($('#invite_code').val()) !== '208930881f2ee87e5e1acf8d661c4fb7'
-            ) {
-            $('#alert-wrapper').html(alert_markup('danger', '<strong>Lo siento!</strong> Tú código de invitado es incorrecto.'));
-        } else {
-            $.post('https://script.google.com/macros/s/AKfycbyIjQcNJ1yEXxD-MGw-zj5e8vnHQx57rKtmY01-UZNqM7z9ESv8EygaIsc1AALo2n9JpA/exec', data)
-                .done(function (data) {
-                    console.log(data);
-                    if (data.result === "error") {
-                        $('#alert-wrapper').html(alert_markup('danger', data.message));
-                    } else {
-                        $('#alert-wrapper').html('');
-                        $('#rsvp-modal').modal('show');
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Lo sentimos!</strong> Hay un problema con el servidor. '));
-                });
-        }
-    });
-*/
-});
-/*
+// ----------------- RSVP  -----------------------------/
+ 
 // ----------------- inviteDetailsModal -----------------------------/
-$(document).ready(function() {
-    // Comprobar si hay un código de invitado en la URL
-    var inviteCode = new URLSearchParams(window.location.search).get('inviteCode');
-    if (inviteCode) {
-        // Obtener detalles del invitado
-        getInviteeDetails(inviteCode);
-    }
+
+   // Comprobar si hay un código de invitado en la URL
+   var inviteCodes = new URLSearchParams(window.location.search).get('code');
+   if (inviteCodes) {
+       // Obtener detalles del invitado
+       getInviteeDetails(inviteCodes);
+   }
 
     // Función para obtener detalles del invitado desde el App Script
     function getInviteeDetails(code) {
         $.ajax({
-            url: 'https://script.google.com/macros/s/AKfycbwd-iomKSOEwB4TZDWsQxwWUKvSmzHSw24N0LrMRVa3NyLJjtJYD8q917Y_YAjKOCvdKA/exec', // Reemplaza con tu URL de App Script
+            url: urlGoogleSheetInvitados, // Reemplaza con tu URL de App Script
             method: 'GET',
             dataType: 'json',
             data: {
@@ -314,13 +281,45 @@ $(document).ready(function() {
         $('#inviteDetailsContent').html(modalContent);
         $('#inviteDetailsModal').modal('show'); // Asegúrate de que estás utilizando Bootstrap para el modal
     }
+
+/*
+    // ----------------- RSVP -----------------------------/
+    $('#rsvp-form').on('submit', function (e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+
+        $('#alert-wrapper').html(alert_markup('info', '<strong>¡Espera un momento!</strong> Estamos guardando tus datos.'));
+
+        if (MD5($('#invite_code').val()) !== '208930881f2ee87e5e1acf8d661c4fb7'
+            ) {
+            $('#alert-wrapper').html(alert_markup('danger', '<strong>Lo siento!</strong> Tú código de invitado es incorrecto.'));
+        } else {
+            $.post('https://script.google.com/macros/s/AKfycbyIjQcNJ1yEXxD-MGw-zj5e8vnHQx57rKtmY01-UZNqM7z9ESv8EygaIsc1AALo2n9JpA/exec', data)
+                .done(function (data) {
+                    console.log(data);
+                    if (data.result === "error") {
+                        $('#alert-wrapper').html(alert_markup('danger', data.message));
+                    } else {
+                        $('#alert-wrapper').html('');
+                        $('#rsvp-modal').modal('show');
+                    }
+                })
+                .fail(function (data) {
+                    console.log(data);
+                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Lo sentimos!</strong> Hay un problema con el servidor. '));
+                });
+        }
+    });
+*/
 });
 
-*/
+
+
+
 
     
     /********************** Login**********************/
-    
+    var urlGoogleSheetInvitados = 'https://script.google.com/macros/s/AKfycbwd-iomKSOEwB4TZDWsQxwWUKvSmzHSw24N0LrMRVa3NyLJjtJYD8q917Y_YAjKOCvdKA/exec';
     // Función para el formulario de inicio de sesión
     $('.login-form').on('submit', function(e) {
         e.preventDefault();
@@ -328,7 +327,7 @@ $(document).ready(function() {
 
         // Llamada AJAX a Google Apps Script
         $.ajax({
-            url: 'https://script.google.com/macros/s/AKfycbwd-iomKSOEwB4TZDWsQxwWUKvSmzHSw24N0LrMRVa3NyLJjtJYD8q917Y_YAjKOCvdKA/exec',
+            url: urlGoogleSheetInvitados,
             method: 'GET',
             dataType: 'json',
             data: {
@@ -339,6 +338,8 @@ $(document).ready(function() {
                 if (response.valid) {
                     window.location.href = 'index.html?code=' + inviteCode;
                     $('#inviteCode').val(''); // Limpia el input
+
+
                 } else {
                     $('#loginError').text('Código de invitado incorrecto.');
                     $('#inviteCode').val(''); // Limpia el input
