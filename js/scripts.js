@@ -303,12 +303,31 @@ function hideLoadingGif() {
     function displayConfirmationModal(invitees, code) {
         var modalContent = invitees.map(function(invitee, index) {
             var checked = invitee.confirmado ? 'checked' : '';
-            return `<div><input type="checkbox" id="invitee-${index}" ${checked}> ${invitee.nombre}</div>`;
+            var confirmStatus = invitee.confirmado ? "Asistencia confirmada" : "No ha confirmado";
+            return `
+                <div class="invitee-container" style="margin-bottom: 10px;">
+                    <input type="checkbox" id="invitee-${index}" ${checked}>
+                    <label for="invitee-${index}">${invitee.nombre}</label> 
+                    <span class="confirm-status" style="margin-left: 10px;">${confirmStatus}</span>
+                </div>
+            `;
         }).join('');
-
-        modalContent += `<button id="sendConfirmationButton" class="btn btn-accent btn-small">Enviar Confirmación</button>`;
+        
+        modalContent += `<div style="text-align: center; margin-top: 20px;">
+                            <button id="sendConfirmationButton" class="btn btn-accent btn-small">Enviar Confirmación</button>
+                         </div>`;
         $('#inviteDetailsContent').html(modalContent);
         $('#inviteDetailsModal').modal('show');
+        
+        // Evento 'change' para los checkboxes
+        $('#inviteDetailsContent').on('change', 'input[type=checkbox]', function() {
+            var statusSpan = $(this).siblings('.confirm-status');
+            if (this.checked) {
+                statusSpan.text("Asistencia confirmada");
+            } else {
+                statusSpan.text("No ha confirmado");
+            }
+        });
 
         $('#sendConfirmationButton').on('click', function() {
             sendConfirmation(code);
@@ -317,6 +336,9 @@ function hideLoadingGif() {
             showLoadingGif();
         });
     }
+    
+    
+    
 
     function sendConfirmation(code) {
         
@@ -339,7 +361,7 @@ function hideLoadingGif() {
             success: function(response) {
                 if (response.result === "success") {
                     hideLoadingGif();
-                    $('#waitMessage').text('Confirmación exitosa.');
+                    $('#waitMessage').text('Se han guardaron tus cambios.');
                     $('#rsvp-modal').modal('show');
                 } else {
                     // Mostrar mensaje de error
