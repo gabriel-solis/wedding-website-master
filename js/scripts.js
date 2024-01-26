@@ -231,17 +231,47 @@ $(document).ready(function () {
 
 
 // ----------------- RSVP  -----------------------------/
+// Mostrar el GIF
+function showLoadingGif() {
+    $('#loadingGifContainer').show();
+}
+
+// Ocultar el GIF
+function hideLoadingGif() {
+    $('#loadingGifContainer').hide();
+}
+
+
+
 
 
     // Manejar el envío del formulario RSVP
     $('#rsvp-form').on('submit', function(e) {
         e.preventDefault();
+        showLoadingGif();
+
         var inviteCode = $('input[name="invite_code"]').val();
         fetchInviteeDetailsAndShowModal(inviteCode);
+
+        // Limpia el input
+        $('#rsvp_input_inviteCode').val('');
+
+        // Configura el mensaje de espera
+        $('#waitMessage').text('Espera un momento.');
+
+        // Muestra el modal
+        //$('#rsvp-modal').modal('show');
+
+        // Oculta el modal después de 2 segundos
+        setTimeout(function() {
+            $('#rsvp-modal').modal('hide');
+        }, 2000);
     });
+
 
     $('#sendConfirmationButton').on('click', function() {
         sendConfirmation(code);
+
     });
     
 
@@ -256,13 +286,16 @@ $(document).ready(function () {
             },
             success: function(response) {
                 if (response && response.length > 0) {
+                    hideLoadingGif();
                     displayConfirmationModal(response, code);
                 } else {
                     // Manejar cuando no hay datos o el código es incorrecto
+                    hideLoadingGif();
                 }
             },
             error: function() {
                 // Manejar error en la solicitud
+                hideLoadingGif();
             }
         });
     }
@@ -279,10 +312,14 @@ $(document).ready(function () {
 
         $('#sendConfirmationButton').on('click', function() {
             sendConfirmation(code);
+            // Cerrar el modal después de enviar la confirmación
+            $('#inviteDetailsModal').modal('hide');
+            showLoadingGif();
         });
     }
 
     function sendConfirmation(code) {
+        
         var confirmedInviteesIndices = [];
         $('#inviteDetailsModal input[type=checkbox]').each(function(index, checkbox) {
             if ($(checkbox).is(':checked')) {
@@ -301,9 +338,14 @@ $(document).ready(function () {
             },
             success: function(response) {
                 if (response.result === "success") {
-                    // Mostrar mensaje de éxito
+                    hideLoadingGif();
+                    $('#waitMessage').text('Confirmación exitosa.');
+                    $('#rsvp-modal').modal('show');
                 } else {
                     // Mostrar mensaje de error
+                    hideLoadingGif();
+                    $('#waitMessage').text('Ups, hubo un error.');
+                    $('#rsvp-modal').modal('show');
                 }
             },
             error: function() {
@@ -377,10 +419,24 @@ $(document).ready(function () {
 
     
     /********************** Login**********************/
+    
+// Mostrar el GIF
+function showLoadingGifLoggin() {
+    $('#loadingGifContainerGiftsLoggin').show();
+}
+
+// Ocultar el GIF
+function hideLoadingGifLoggin() {
+    $('#loadingGifContainerGiftsLoggin').hide();
+}
+
+
+
     var urlGoogleSheetInvitados = 'https://script.google.com/macros/s/AKfycbwWhKFFjem4I0F-jJull5sunr8vxN6qqG1QRhdz-c6-yOBZCLxL0kh0DZOrdRXimKX01w/exec';
     // Función para el formulario de inicio de sesión
     $('.login-form').on('submit', function(e) {
         e.preventDefault();
+        showLoadingGifLoggin();
         var inviteCode = $('#inviteCode').val();
 
         // Llamada AJAX a Google Apps Script
@@ -394,16 +450,19 @@ $(document).ready(function () {
             },
             success: function(response) {
                 if (response.valid) {
+                    hideLoadingGifLoggin();
                     window.location.href = 'index.html?code=' + inviteCode;
                     $('#inviteCode').val(''); // Limpia el input
 
 
                 } else {
+                    hideLoadingGifLoggin();
                     $('#loginError').text('Código de invitado incorrecto.');
                     $('#inviteCode').val(''); // Limpia el input
                 }
             },
             error: function() {
+                hideLoadingGifLoggin();
                 $('#loginError').text('Error al procesar la solicitud.');
                 $('#inviteCode').val(''); // Limpia el input
             }
@@ -461,7 +520,8 @@ function toggleStatus(index, giftName) {
         codeModal.style.display = "none";
 
         // Muestra el mensaje de espera
-        showWaitMessage('Espere mientras procesamos la solicitud', true);
+        showLoadingGifTable();
+        //showWaitMessage('waitModalGiftsTable','Espere mientras procesamos la solicitud', true);
 
         // Continuar con la lógica de AJAX
         if (code) {
@@ -475,6 +535,7 @@ function toggleStatus(index, giftName) {
                 },
                 success: function(response) {
                     if (response.result === 'success') {
+                        hideLoadingGifTable();
                         var statusSpan = document.querySelector('#status-' + index + ' span');
                         var currentStatus = statusSpan.textContent;
                         var newStatus = currentStatus === 'Apartado' ? 'Disponible' : 'Apartado';
@@ -487,13 +548,13 @@ function toggleStatus(index, giftName) {
 
                         // Mostrar mensaje basado en el estado anterior
                         if(currentStatus === 'Apartado') {
-                            showWaitMessage('Se liberó el regalo para que alguien más lo aparte.', true);
+                            showWaitMessage('waitModalGiftsTable','Se liberó el regalo para que alguien más lo aparte.', true);
                         } else {
-                            showWaitMessage('Se apartó el regalo con éxito', true);
+                            showWaitMessage('waitModalGiftsTable','Se apartó el regalo con éxito', true);
                         }
                         
                     } else {
-
+                        hideLoadingGifTable();
                         // Muestra el modal de error
                         document.getElementById('errorMessage').textContent = response.message;
                         var errorModal = document.getElementById('errorModal');
@@ -539,8 +600,8 @@ function toggleStatus(index, giftName) {
 }
 
 // Función para mostrar mensaje de espera o éxito
-function showWaitMessage(message, hideAfter = false) {
-    var waitModal = document.getElementById('waitModal');
+function showWaitMessage(idModal,message, hideAfter = false) {
+    var waitModal = document.getElementById(idModal);
     var waitMessage = document.getElementById('waitMessage');
     
     waitMessage.textContent = message;
@@ -556,15 +617,26 @@ function showWaitMessage(message, hideAfter = false) {
 
 
 
+function showLoadingGifTable() {
+    $('#loadingGifContainerGiftsTable').show();
+}
+
+// Ocultar el GIF
+function hideLoadingGifTable() {
+    $('#loadingGifContainerGiftsTable').hide();
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
     function fetchGifts() {
-        showWaitMessage('Cargando mesa de regalo',true);
+        showLoadingGifTable();
         $.ajax({
             url: urlGoogleSheetMesaRegalos,
             method: 'GET',
             dataType: 'json',
             success: function(data) {
+                hideLoadingGifTable();
                 displayGifts(data);
             },
             error: function(err) {
