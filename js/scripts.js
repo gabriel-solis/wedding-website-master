@@ -231,7 +231,88 @@ $(document).ready(function () {
 
 
 // ----------------- RSVP  -----------------------------/
- 
+
+
+    // Manejar el envío del formulario RSVP
+    $('#rsvp-form').on('submit', function(e) {
+        e.preventDefault();
+        var inviteCode = $('input[name="invite_code"]').val();
+        fetchInviteeDetailsAndShowModal(inviteCode);
+    });
+
+    $('#sendConfirmationButton').on('click', function() {
+        sendConfirmation(code);
+    });
+    
+
+    function fetchInviteeDetailsAndShowModal(code) {
+        $.ajax({
+            url: urlGoogleSheetInvitados, // Asegúrate de que esta URL sea correcta
+            method: 'GET',
+            dataType: 'json',
+            data: {
+                action: 'getInviteeDetails',
+                code: code
+            },
+            success: function(response) {
+                if (response && response.length > 0) {
+                    displayConfirmationModal(response, code);
+                } else {
+                    // Manejar cuando no hay datos o el código es incorrecto
+                }
+            },
+            error: function() {
+                // Manejar error en la solicitud
+            }
+        });
+    }
+
+    function displayConfirmationModal(invitees, code) {
+        var modalContent = invitees.map(function(invitee, index) {
+            var checked = invitee.confirmado ? 'checked' : '';
+            return `<div><input type="checkbox" id="invitee-${index}" ${checked}> ${invitee.nombre}</div>`;
+        }).join('');
+
+        modalContent += `<button id="sendConfirmationButton" class="btn btn-accent btn-small">Enviar Confirmación</button>`;
+        $('#inviteDetailsContent').html(modalContent);
+        $('#inviteDetailsModal').modal('show');
+
+        $('#sendConfirmationButton').on('click', function() {
+            sendConfirmation(code);
+        });
+    }
+
+    function sendConfirmation(code) {
+        var confirmedInviteesIndices = [];
+        $('#inviteDetailsModal input[type=checkbox]').each(function(index, checkbox) {
+            if ($(checkbox).is(':checked')) {
+                confirmedInviteesIndices.push(index);
+            }
+        });
+    
+        $.ajax({
+            url: urlGoogleSheetInvitados,
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'updateAttendance',
+                code: code,
+                confirmed: confirmedInviteesIndices.join(',')
+            },
+            success: function(response) {
+                if (response.result === "success") {
+                    // Mostrar mensaje de éxito
+                } else {
+                    // Mostrar mensaje de error
+                }
+            },
+            error: function() {
+                // Manejar error
+            }
+        });
+    }
+    
+
 // ----------------- inviteDetailsModal -----------------------------/
 
    // Comprobar si hay un código de invitado en la URL
@@ -241,10 +322,12 @@ $(document).ready(function () {
        getInviteeDetails(inviteCodes);
    }
 
+
+
     // Función para obtener detalles del invitado desde el App Script
     function getInviteeDetails(code) {
         $.ajax({
-            url: urlGoogleSheetInvitados, // Reemplaza con tu URL de App Script
+            url: urlGoogleSheetInvitados, // URL appscript para invitados
             method: 'GET',
             dataType: 'json',
             data: {
@@ -261,6 +344,8 @@ $(document).ready(function () {
             }
         });
     }
+
+    
 
     // Función para mostrar los detalles del invitado en un modal
     function showInviteDetailsModal(invitees) {
@@ -282,35 +367,8 @@ $(document).ready(function () {
         $('#inviteDetailsModal').modal('show'); // Asegúrate de que estás utilizando Bootstrap para el modal
     }
 
-/*
-    // ----------------- RSVP -----------------------------/
-    $('#rsvp-form').on('submit', function (e) {
-        e.preventDefault();
-        var data = $(this).serialize();
 
-        $('#alert-wrapper').html(alert_markup('info', '<strong>¡Espera un momento!</strong> Estamos guardando tus datos.'));
 
-        if (MD5($('#invite_code').val()) !== '208930881f2ee87e5e1acf8d661c4fb7'
-            ) {
-            $('#alert-wrapper').html(alert_markup('danger', '<strong>Lo siento!</strong> Tú código de invitado es incorrecto.'));
-        } else {
-            $.post('https://script.google.com/macros/s/AKfycbyIjQcNJ1yEXxD-MGw-zj5e8vnHQx57rKtmY01-UZNqM7z9ESv8EygaIsc1AALo2n9JpA/exec', data)
-                .done(function (data) {
-                    console.log(data);
-                    if (data.result === "error") {
-                        $('#alert-wrapper').html(alert_markup('danger', data.message));
-                    } else {
-                        $('#alert-wrapper').html('');
-                        $('#rsvp-modal').modal('show');
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Lo sentimos!</strong> Hay un problema con el servidor. '));
-                });
-        }
-    });
-*/
 });
 
 
@@ -319,7 +377,7 @@ $(document).ready(function () {
 
     
     /********************** Login**********************/
-    var urlGoogleSheetInvitados = 'https://script.google.com/macros/s/AKfycbwd-iomKSOEwB4TZDWsQxwWUKvSmzHSw24N0LrMRVa3NyLJjtJYD8q917Y_YAjKOCvdKA/exec';
+    var urlGoogleSheetInvitados = 'https://script.google.com/macros/s/AKfycbwlK1Ryt5mIWVsNLe8L7GoN5MnZ-olk2nvWrtwdkhhpAd8A9u8XfVgWtGMPtPM48WAMgQ/exec';
     // Función para el formulario de inicio de sesión
     $('.login-form').on('submit', function(e) {
         e.preventDefault();

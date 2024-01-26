@@ -526,30 +526,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-input-group">
-                                <i class="fa fa-users"></i><input type="number" name="adult_tickets" 
-                                                                class="" min="0"
-                                                                placeholder="# adultos"
-                                                                required>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-input-group">
-                                <i class="fa fa-child"></i><input type="number" name="child_tickets" 
-                                                                class="" min="0"
-                                                                placeholder="# de infantes"
-                                                                required>
-                                
-                            </div>
-                            <p class="form-text text-muted">Si no tiene infantes poner 0.</p>
-                        </div>    
-                    </div>
-                    <div class="row">
                         <div class="col-md-12" id="alert-wrapper"></div>
                     </div>
-                    <button class="btn-fill rsvp-btn">
-                        ¡Confirmar!
+                    <button id="rsv-" class="btn-fill rsvp-btn">
+                        ¡Confirmar! o Modificar
                     </button>
                 </form>
             </div>
@@ -557,7 +537,25 @@
     </div>
 </section>
 
+<div id="successModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Asistencia confirmada correctamente.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div id="errorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Error al confirmar asistencia.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <footer>
     <div class="container">
