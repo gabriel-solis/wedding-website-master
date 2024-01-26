@@ -377,7 +377,7 @@ $(document).ready(function () {
 
     
     /********************** Login**********************/
-    var urlGoogleSheetInvitados = 'https://script.google.com/macros/s/AKfycbwlK1Ryt5mIWVsNLe8L7GoN5MnZ-olk2nvWrtwdkhhpAd8A9u8XfVgWtGMPtPM48WAMgQ/exec';
+    var urlGoogleSheetInvitados = 'https://script.google.com/macros/s/AKfycbwWhKFFjem4I0F-jJull5sunr8vxN6qqG1QRhdz-c6-yOBZCLxL0kh0DZOrdRXimKX01w/exec';
     // Función para el formulario de inicio de sesión
     $('.login-form').on('submit', function(e) {
         e.preventDefault();
