@@ -291,13 +291,23 @@ function hideLoadingGif() {
                 } else {
                     // Manejar cuando no hay datos o el código es incorrecto
                     hideLoadingGif();
+                    // Mostrar mensaje de error para código inválido
+                    showErrorModal("Código de invitado inválido. Por favor, intenta de nuevo.");
                 }
             },
             error: function() {
                 // Manejar error en la solicitud
                 hideLoadingGif();
+                // Mostrar mensaje de error para fallo en la solicitud
+                showErrorModal("Error al procesar la solicitud. Por favor, intenta de nuevo más tarde.");
+       
             }
         });
+    }
+
+    function showErrorModal(message) {
+        $('#waitMessageError').text(message);
+        $('#rsvp-modalError').modal('show');
     }
 
     function displayConfirmationModal(invitees, code) {
