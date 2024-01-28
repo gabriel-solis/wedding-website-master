@@ -534,7 +534,7 @@ $(document).ready(function () {
     });
 
 /********************** Mesa de regalos **********************/
-var urlGoogleSheetMesaRegalos = 'https://script.google.com/macros/s/AKfycbwgl7UCWI1i6rZd0QPioHbspxZwbVJ4A9rpx5LjgjVjsP37wOC-PIC_vzMefQcsYeAn/exec';
+var urlGoogleSheetMesaRegalos = 'https://script.google.com/macros/s/AKfycbxf2AjfkejGqxPl6HzQlje2VVk1jqepE0eGkKx-ao4TmeTv5KeZLJugxpV2zsYho8KZ/exec';
 
 function toggleStatus(index, giftName) {
     
