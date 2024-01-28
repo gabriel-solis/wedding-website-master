@@ -231,23 +231,34 @@ $(document).ready(function () {
 
 
 // ----------------- RSVP  -----------------------------/
-// Mostrar el GIF
-function showLoadingGif() {
-    $('#loadingGifContainer').show();
-}
+    // Mostrar el GIF
+    function showLoadingGif() {
+        $('#loadingGifContainer').show();
+    }
 
-// Ocultar el GIF
-function hideLoadingGif() {
-    $('#loadingGifContainer').hide();
-}
+    // Ocultar el GIF
+    function hideLoadingGif() {
+        $('#loadingGifContainer').hide();
+    }
 
 
+    // Evento que se activa al cerrar el modal 'rsvp-modal'
+    $('#rsvp-modal').on('hidden.bs.modal', function () {
+        // Buscar el checkbox dentro del contenedor 'add-to-cal'
+        var checkbox = $('#add-to-cal .add-to-calendar-checkbox');
+        if (checkbox.length) {
+            // Desmarcar el checkbox para ocultar las opciones de Google y Yahoo
+            checkbox.prop('checked', false);
+        }
+    });
 
 
 
     // Manejar el envío del formulario RSVP
     $('#rsvp-form').on('submit', function(e) {
         e.preventDefault();
+        // Limpiar cualquier mensaje de error previo
+        $('#alert-wrapper').html('');
         showLoadingGif();
 
         var inviteCode = $('input[name="invite_code"]').val();
@@ -276,6 +287,7 @@ function hideLoadingGif() {
     
 
     function fetchInviteeDetailsAndShowModal(code) {
+        
         $.ajax({
             url: urlGoogleSheetInvitados, // Asegúrate de que esta URL sea correcta
             method: 'GET',
@@ -292,23 +304,22 @@ function hideLoadingGif() {
                     // Manejar cuando no hay datos o el código es incorrecto
                     hideLoadingGif();
                     // Mostrar mensaje de error para código inválido
-                    showErrorModal("Código de invitado inválido. Por favor, intenta de nuevo.");
+                    $('#alert-wrapper').html(alert_markup('danger', 'Código invalido'));
+                    
                 }
             },
             error: function() {
                 // Manejar error en la solicitud
                 hideLoadingGif();
                 // Mostrar mensaje de error para fallo en la solicitud
-                showErrorModal("Error al procesar la solicitud. Por favor, intenta de nuevo más tarde.");
+                $('#alert-wrapper').html(alert_markup('danger', 'Error al procesar la solicitud. Por favor, intenta de nuevo más tarde.'));
+                
        
             }
         });
     }
 
-    function showErrorModal(message) {
-        $('#waitMessageError').text(message);
-        $('#rsvp-modalError').modal('show');
-    }
+
 
     function displayConfirmationModal(invitees, code) {
         var modalContent = invitees.map(function(invitee, index) {
@@ -371,6 +382,14 @@ function hideLoadingGif() {
             success: function(response) {
                 if (response.result === "success") {
                     hideLoadingGif();
+
+                    // Verificar si hay al menos un invitado confirmado
+                    if (confirmedInviteesIndices.length > 0) {
+                        $('#add-to-cal').show(); // Mostrar botón de agregar al calendario
+                    } else {
+                        $('#add-to-cal').hide(); // Ocultar botón si nadie va a asistir
+                    }
+
                     $('#waitMessage').text('Se han guardaron tus cambios.');
                     $('#rsvp-modal').modal('show');
                 } else {
@@ -452,19 +471,19 @@ function hideLoadingGif() {
     
     /********************** Login**********************/
     
-// Mostrar el GIF
-function showLoadingGifLoggin() {
-    $('#loadingGifContainerGiftsLoggin').show();
-}
+    // Mostrar el GIF
+    function showLoadingGifLoggin() {
+        $('#loadingGifContainerGiftsLoggin').show();
+    }
 
-// Ocultar el GIF
-function hideLoadingGifLoggin() {
-    $('#loadingGifContainerGiftsLoggin').hide();
-}
+    // Ocultar el GIF
+    function hideLoadingGifLoggin() {
+        $('#loadingGifContainerGiftsLoggin').hide();
+    }
 
 
 
-    var urlGoogleSheetInvitados = 'https://script.google.com/macros/s/AKfycbwWhKFFjem4I0F-jJull5sunr8vxN6qqG1QRhdz-c6-yOBZCLxL0kh0DZOrdRXimKX01w/exec';
+    var urlGoogleSheetInvitados = 'https://script.google.com/macros/s/AKfycbwtbxjq5eV115NZjEhOMd2I4CUOqNLjgMnmpiZdzccBQEMNXewE1G7njONTHmQJe5tNNQ/exec';
     // Función para el formulario de inicio de sesión
     $('.login-form').on('submit', function(e) {
         e.preventDefault();
