@@ -337,6 +337,9 @@ $(document).ready(function () {
         modalContent += `<div style="text-align: center; margin-top: 20px;">
                             <button id="sendConfirmationButton" class="btn btn-accent btn-small">Enviar Confirmación</button>
                          </div>`;
+        // Hacer visible el mensaje de confirmación
+        $('#confirmationMessage').css('display', 'block');
+
         $('#inviteDetailsContent').html(modalContent);
         $('#inviteDetailsModal').modal('show');
         
@@ -354,6 +357,7 @@ $(document).ready(function () {
             sendConfirmation(code);
             // Cerrar el modal después de enviar la confirmación
             $('#inviteDetailsModal').modal('hide');
+            $('#confirmationMessage').css('display', 'none');
             showLoadingGif();
         });
     }
@@ -429,7 +433,7 @@ $(document).ready(function () {
             },
             success: function(response) {
                 if (response && response.length > 0) {
-                    showInviteDetailsModal(response);
+                    showInviteDetailsModal(response, false);
                 }
             },
             error: function() {
@@ -441,7 +445,7 @@ $(document).ready(function () {
     
 
     // Función para mostrar los detalles del invitado en un modal
-    function showInviteDetailsModal(invitees) {
+    function showInviteDetailsModal(invitees, showConfirmationMessage) {
         var adultTickets = 0;
         var childTickets = 0;
         var inviteeNames = invitees.map(function(invitee) {
@@ -457,7 +461,15 @@ $(document).ready(function () {
         }
 
         $('#inviteDetailsContent').html(modalContent);
-        $('#inviteDetailsModal').modal('show'); // Asegúrate de que estás utilizando Bootstrap para el modal
+        //$('#inviteDetailsModal').modal('show'); // Asegúrate de que estás utilizando Bootstrap para el modal
+
+        if (showConfirmationMessage) {
+            $('#confirmationMessage').show();
+        } else {
+            $('#confirmationMessage').hide();
+        }
+    
+        $('#inviteDetailsModal').modal('show');
     }
 
 
