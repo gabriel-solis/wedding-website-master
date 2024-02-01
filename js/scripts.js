@@ -183,6 +183,7 @@ $(document).ready(function () {
         $('#btn-show-content').toggleClass('toggle-map-content');
     });
 
+
     /********************** Add to Calendar **********************/
     var myCalendar = createCalendar({
         options: {
@@ -213,6 +214,7 @@ $(document).ready(function () {
     });
 
     $('#add-to-cal').html(myCalendar);
+
 
     /********************** Close Modal **********************/
     // Cerrar modal cuando se hace clic en el botón de cierre

@@ -16,7 +16,7 @@
     <meta name="theme-color" content="#ffffff">
     <meta property="og:title" content="Jessica & Gabriel se casan">
     <meta property="og:description" content="Nos gustaría invitarte a nuestro gran día.">
-    <meta property="og:image" content="img/portada.png">
+    <meta property="og:image" content="img/portad.png">
     <meta property="og:type" content="website">
     <!--
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -56,6 +56,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/jquery.fancybox.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.autoplay.css"/>
     <link rel="stylesheet" href="css/flexslider.css">
     <link rel="stylesheet" href="css/styles.min.css">
     <link rel="stylesheet" href="css/queries.css">
@@ -195,7 +197,7 @@
     </div>
 </section>
 
-<section id="music">
+<section id="music" >
     <div class="container">
         <div class="row">
             <div class="col text-center">
@@ -238,11 +240,78 @@
     </div>
 </section>
 
+<!-- Sección de Padrinos y Padres -->
+<section id="padrinos-parents" class="section-padding parents-godfathers">
+    <div class="container">
+        <div class="border-parents">
+            <div class="row">
+                <!-- Columna de Padres -->
+                <div class="col-md-6 col-sm-12 col-xs-12 leftcol animated  text-center padres-names">
+                    <div class="wp3">
+                        <h4>Padres</h4>
+                        <ul>
+                            <h6>Novia</h6>
+                            <li>Esperanza Escobar y Marco Santos</li>
+                            <h6>Novio</h6>
+                            <li>Marlene Aguilar y Rodrigo Solis</li>
+                            
+                        </ul>
+                    </div>
+                </div>
+    
+                <!-- Columna de Padrinos -->
+                <div class="col-md-6 col-sm-12 col-xs-12 rightcol animated text-center">
+                    <div class="wp4">
+                        <h4>Padrinos</h4>
+                        <ul >
+                            <h6>Velación:</h6>
+                            <li>Edgar Solis y Norma Pavon</li>
+                            <h6>Lazo: </h6>
+                            <li>Juan Escobar y Guadalupe</li>
+                            <h6>Anillos: </h6>
+                            <li>Jorge Méndez</li>
+                            <h6>Arras: </h6>
+                            <li>Marco Santos y Angelica Gónzalez</li>
+                        </ul>
+                        
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección del Carrusel -->
 <section id="blessing">
     <div class="containter">
         <div class="row">
             <div class="text-center">
-
+                <div class="f-carousel" id="myCarousel">
+                    <div class="f-carousel__slide">
+                        <img  src="img/carousel/1.jpg" alt="">
+                    </div>
+                    <div class="f-carousel__slide">
+                        <img  src="img/carousel/2.jpg" alt="">
+                    </div>
+                    <div class="f-carousel__slide">
+                        <img  src="img/carousel/3.jpg" alt="">
+                    </div>
+                    <div class="f-carousel__slide">
+                        <img  src="img/carousel/4.jpg" alt="">
+                    </div>
+                    <div class="f-carousel__slide">
+                        <img  src="img/carousel/5.jpg" alt="">
+                    </div>
+                    <div class="f-carousel__slide">
+                        <img  src="img/carousel/6.jpg" alt="">
+                    </div>
+                    <div class="f-carousel__slide">
+                        <img  src="img/carousel/7.jpg" alt="">
+                    </div>
+                    <div class="f-carousel__slide">
+                        <img  src="img/carousel/8.jpg" alt="">
+                    </div>
+                  </div>
             </div>
         </div>
     </div>
@@ -350,7 +419,7 @@
                 </p>
             </div>
         </div>
-        <div class="row section-border wp7">
+        <div class="row wp7">
             <div class="col-md-4 col-md-offset-4">
                 <a href="https://www.instagram.com/explore/tags/jessiandgabo/"><img src="img/insta-phone.png"></a>
             </div>
@@ -358,7 +427,7 @@
     </div>
 </section>
 
-<section id="eng-pics" class="section-padding">
+<section id="eng-pics" class="section-padding" style="background: #f8f9fd;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -638,11 +707,26 @@
 <script src="js/jquery.fancybox.pack.js"></script> 
 <!-- Scripts para fancybox-->
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<!-- Este es para el carrusel -->
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/carousel/carousel.autoplay.umd.js"></script>
+<script>
+    new Carousel(document.getElementById("myCarousel"), {
+      Autoplay : {
+        progressParentEl : (autoplay) => {
+          return autoplay.instance.viewport;
+        }
+      }
+    }, {
+      Autoplay
+    });
+  </script>
+<!-- Este es para las fotos de la pedida -->
 <script>
     Fancybox.bind('[data-fancybox="gallery"]', {
       //
     });    
 </script>
+
 <!-- Terminan scripts para fancybox-->
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/jquery.flexslider-min.js"></script>

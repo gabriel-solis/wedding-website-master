@@ -40,3 +40,80 @@
     font-style: italic;
     color: #555;
 }
+
+/*----- Carousel ------*/
+#myCarousel {
+    --f-carousel-spacing: 10px;
+    --f-carousel-slide-width: 80%;
+  }
+
+  #myCarousel .f-carousel__slide {
+    padding: 50px;
+    background: #eee;
+  }
+ #myCarousel .f-carousel__slide img {
+    max-width: 100%; /* Asegura que la imagen no sea más ancha que el contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    max-height: 70vh; /* Limita la altura máxima de la imagen */
+    object-fit: contain; /* Mantiene la imagen dentro de su contenedor */
+}
+
+.parents-godfathers {
+    background: #f8f9fd;
+
+}
+
+
+
+
+/* CSS para pantallas grandes donde las columnas están una al lado de la otra */
+@media (min-width: 768px) { /* Este valor de 'min-width' puede variar según tu diseño */
+    .padres-names {
+      border-right: solid 1px #E6E9EA;
+    }
+
+  }
+  
+
+
+  /* CSS para pantallas más pequeñas donde las columnas están apiladas */
+  
+  @media (max-width: 767px) {
+    .padres-names {
+      border-right: none;
+      
+    }
+    .parents-godfathers {
+        background-image: url("/img/borde.jpg");
+        background-size: contain; /* Esto hará que la imagen cubra todo el contenedor */
+        background-position: center center; /* Esto centrará la imagen en el contenedor */
+        background-repeat: no-repeat; /* Esto evitará que la imagen se repita */
+        border-spacing: 1rem;
+    }
+    .border-parents {
+        padding: 5%; /* Ajusta el padding para que el contenido no se salga en dispositivos pequeños */
+    }
+
+  }
+  
+  /* CSS para eliminar los espacios entre h4, h6, ul y li */
+#padrinos-parents h4, 
+#padrinos-parents h6, 
+#padrinos-parents ul, 
+#padrinos-parents li {
+    margin: 0; /* Elimina los márgenes por defecto */
+    padding: 0; /* Elimina los paddings por defecto si es necesario */
+}
+
+#padrinos-parents ul {
+    list-style-type: none; /* Elimina los bullets de la lista */
+}
+
+
+#padrinos-parents h6 {
+    padding-bottom: 0.1rem; /* Agrega un pequeño espacio debajo de los títulos si es necesario */
+}
+
+#padrinos-parents li {
+    padding: 0.25rem 0; /* Agrega un poco de espacio vertical entre los elementos de la lista si es necesario */
+}
