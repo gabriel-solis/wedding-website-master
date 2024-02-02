@@ -84,3 +84,26 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+@media screen and (max-width: 600px) {
+    /* Convierte las filas de la tabla en contenedores flex */
+    .wide-table tr {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Asegura espacio entre los elementos */
+        border-bottom: 1px solid #ddd; /* Estilo de separación de items */
+    }
+
+    /* Estilos para las celdas para que ocupen todo el ancho y el botón quede centrado debajo */
+    .wide-table td, .wide-table th {
+        display: flex;
+        justify-content: center; /* Centra el contenido de las celdas */
+        width: 100%;
+        margin-bottom: 0px; /* Espacio entre la descripción del regalo y el botón */
+    }
+
+    /* Específico para el botón, para asegurar que ocupe su espacio natural y quede centrado */
+    .wide-table td .btn, .wide-table th .btn {
+        margin: 0 auto; /* Centra el botón */
+    }
+}

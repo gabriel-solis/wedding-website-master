@@ -64,7 +64,7 @@
 }
 
 
-  /* CSS para pantallas más pequeñas donde las columnas están apiladas */
+  /* CSS para imagen papás y padrinos */
   
   @media (max-width: 767px) {
     .padres-names {
@@ -98,7 +98,7 @@
 
   }
   
-
+/* Centrar rol y nombre de las personas en el carrusel*/
 #blessing h3,
 #blessing p {
     text-align: center;
